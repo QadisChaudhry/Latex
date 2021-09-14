@@ -1,0 +1,202 @@
+\documentclass[12pt]{article}
+\usepackage{indentfirst}
+\usepackage{amsmath}
+\setlength{\jot}{2ex}
+\usepackage{mathrsfs}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{booktabs}
+\usepackage[letterpaper, margin=1in]{geometry}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhead[R]{Homework 1}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{1pt}
+\renewcommand{\footrulewidth}{1pt}
+\usepackage [autostyle, english = american]{csquotes}
+\MakeOuterQuote{"}
+\usepackage{enumitem}
+\renewcommand{\baselinestretch}{1.0}
+\newcommand{\objects}[2]{%
+  \leavevmode\vbox{\hbox{#1}\nointerlineskip\hbox{#2}}%
+}
+\begin{document}
+    \section*{Problem 1}
+    \begin{enumerate}
+        \item[(1)]
+            Personal computer - Macbook \\
+            Personal mobile device - iPhone \\
+            Embedded computer - Navigation system within car \\
+            Server computer - Video game multiplayer servers \\
+            Supercomputer - IBM Roadrunner supercomputer \\
+            Warehouse computer (Cloud computing) - Amazon Web Services (EC2 \&
+            S3)
+        \item[(2)]
+            \begin{itemize}[leftmargin=*]
+                \item[-] Personal computer: This device must be able to handle a
+                    multitude of tasks at the same time and be relatively silent
+                    and therefore energy efficient as they will be connected to
+                    the home and the user at all times.
+                \item[-] Personal mobile device: This device must be portable
+                    and be able to withstand impacts and motion without damage
+                    to the internal processors and battery.
+                \item[-] Embedded computer: This computer must be able store a
+                    vast amount of information as it will be working offline
+                    most of the time and therefore needs to have the data it
+                    needs to function on hand at all times.
+                \item[-] Server computer: Servers are usually very big and are
+                    required to be able to handle a lot of traffic as people are
+                    logging in and out constantly. The processors have to be
+                    fast and the energy constraint is not much of a problem.
+                \item[-] Supercomputer: These computers are used for massive
+                    tasks such as scientific simulations and large computations
+                    therefore,  they require immense processing power as well as
+                    a large amount of storage space due to their large
+                    collection  of data.
+                \item[-] Warehouse computer: These computers need to be
+                    encrypted as they handle a large amount of sensitive
+                    information and this also requires a large amount of storage
+                    space for that data.
+            \end{itemize}
+        \item[(3)]
+            One computer that is not listed above in any of the categories but
+            would be fitting, is the calculator. This would be an example of a
+            mobile computer since it provides one function and for the most
+            part, they are portable. The calculator, or even a simple adding
+            machine, was one of the first computers to exist for the sole
+            purpose of dealing with numbers. For this reason, it would be an
+            ideal example of a mobile computer.
+    \end{enumerate}
+    \section*{Problem 2}
+    \begin{enumerate}
+        \item[(1)]
+            The five components of computer architecture are, input, output,
+            memory, datapath, and control. These five components come together
+            to form every computer. Every computer contains parts from each of
+            these five categories and this allows for it to function properly.
+            The input serves the basic function of supplying the computer with
+            information such as the task which needs to be done as well as any
+            other givens. The datapath and control form the processor which
+            actually completes the task, with the help of the memory. The
+            memory's function is to supply the processor with the needed data
+            and instructions in order to complete the task. Finally comes the
+            output which is the result of the processor's computation.
+        \item[(2)]
+            A smartphone is an example of a computer, which implies that its
+            parts will fall into each of the five categories. The input and
+            output can be said to be the touchscreen display of the phone as
+            this is what the user interacts with and through which gives the
+            computer its tasks. The 4 gigabytes of memory and the processor can
+            be found to be in Apple's A12 chip, this is where the memory,
+            datapath, and control categories can be found.
+        \item[(3)]
+            If we take personal computer for example, the parts that make that
+            type of computer up are relatively the same however, differ in many
+            ways. For a large scale PC, the inputs and outputs are no longer
+            just a screen. Inputs are given by external peripherals such as a
+            keyboard and a mouse, and the output is seen through an external
+            monitor. The memory as well on these computers is not the same since
+            on a PC, the sticks of RAM are not integrated directly on the
+            processor rather, they are connected to the motherboard and are of
+            larger size. Up to 64 gigabytes is valid compared to the lowly 4 on
+            the smartphone. The processor, datapath and control, is also
+            designed for much higher intensity work and has tens of cores
+            whereas a smartphone may only have a few. Essentially, each of the
+            parts performs the same function, but the integration of each of
+            them is vastly different.
+    \end{enumerate}
+    \section*{Problem 3}
+    \begin{enumerate}
+        \item[(1)]
+            \[
+                \text{CPU time} = \frac{\text{Instruction Count} \times
+                \text{CPI}}{\text{Clock Rate}}
+            \]
+            \begin{itemize}[leftmargin=*]
+                    \item[-] Processor A:
+                    \[
+                        \text{CPU Time} = \frac{(0.4)(1)+(0.2)(2)+(0.4)(6)}{1
+                        \times 10^{9}} = 3.2 \times 10^{-9}\ s
+                    \]
+                    \item[-] Processor B:
+                    \[
+                        \text{CPU Time} = \frac{(0.4)(1.5)+(0.2)(3)+(0.4)(7)}{2
+                        \times 10^{9}} = 2 \times 10^{-9}\ s
+                    \] \,
+                    \item[]
+                    This shows that Processor B is faster than Processor A since
+                    it has a shorter CPU time. To determine how much faster, the
+                    CPU time of the first processor can be divided by the time
+                    of the second, $\frac{3.2 \times 10^{-9}}{2 \times
+                    10^{-9}}$, which gives a value of $1.6$ times faster.
+            \end{itemize}
+        \item[(2)]
+            \[
+                \text{Amdahl's Law} =
+                \frac{T_{\text{affected}}}{\text{Improvement Factor}} +
+                T_{\text{unaffected}}
+            \]
+            \[
+                \text{Improvement Factor} = 2
+            \]
+            \[
+                T_{\text{affected}} = \frac{(0.2)\text{(Branch Instruction
+                CPI)}}{\text{CPU Clock Rate}}
+            \]
+            \[
+                T_{\text{unaffected}} = \frac{(0.4)\text{(ALU CPI)} +
+                (0.4)\text{(Memory Load CPI)}}{\text{CPU Clock Rate}}
+            \]
+            \begin{itemize}
+                \item[-] Processor A:
+                    \[
+                        \text{CPU time} = \frac{1}{2} \times \frac{(0.2)(2)}{1
+                        \times 10^{9}} + \frac{(0.4)(1) + (0.4)(6)}{1 \times
+                        10^{9}} = 3 \times 10^{-9}\ s
+                    \]
+                    \[
+                        \frac{\text{(CPU Time)}_{1}}{\text{(CPU Time)}_{2}} =
+                        \frac{3.2 \times 10^{-9}}{3 \times 10^{-9}}= 1.0667
+                    \]
+                \item[-] Processor B:
+                    \[
+                        \text{CPU time} = \frac{1}{2} \times \frac{(0.2)(3)}{2
+                        \times 10^{9}} + \frac{(0.4)(1.5) + (0.4)(7)}{2 \times
+                        10^{9}} = 1.85 \times 10^{-9}\ s
+                    \]
+                    \[
+                        \frac{\text{(CPU Time)}_{1}}{\text{(CPU Time)}_{2}} =
+                        \frac{2 \times 10^{-9}}{1.85 \times 10^{-9}}= 1.0811
+                    \]
+                From the calculations above, it can be seen that with the
+                acceleration of the performance of the branch instructions,
+                Processor A is about 1.067 times faster, and Processor B is
+                about 1.08 times faster than the speed without the
+                acceleration.
+            \end{itemize}
+    \end{enumerate}
+    \section*{Problem 4}
+    \begin{enumerate}
+        \item[(1)]
+            Moore's Law states that integrated circuit resources will double
+            every two years.
+        \item[(2)]
+            The textbook likely removed the idea of "designing with Moore's Law
+            in mind" due to the fact that it is not a foundational construct of
+            computer architecture any longer. "No exponential growth can last
+            forever," and this is true for Moore's Law as well since it can be
+            seen to be slowing down as time progresses. Integrated circuits are
+            not doubling in power and performance every two years and for this
+            reason, it was likely taken out of the $2^{nd}$ edition of the book.
+        \item[(3)]
+            The fact the Moore's Law is no longer valid, provides implications
+            of stagnation within the advancement of computer processors and
+            memory. Possible solutions may only come in the form of vastly
+            different ways of making transistors and computer parts in general.
+            As the end of the Law nears, the traditional transistor will likely
+            have to be replaced by a new form of technology, such as quantum
+            mechanical transistors. This would be the most extreme form of
+            multiprocessing as quantum computers can evaluate far more tasks
+            simultaneously than traditional computers with any amount of cores.
+    \end{enumerate}
+\end{document}
