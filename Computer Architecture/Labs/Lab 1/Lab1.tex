@@ -1,0 +1,228 @@
+\documentclass[12pt]{article}
+\usepackage{indentfirst}
+\usepackage{amsmath}
+\usepackage{multicol}
+\setlength{\jot}{2ex}
+\usepackage{mathrsfs}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{booktabs}
+\usepackage[letterpaper, margin=1in]{geometry}
+\usepackage{fancyhdr}
+\usepackage [autostyle, english = american]{csquotes}
+\MakeOuterQuote{"}
+\renewcommand{\baselinestretch}{1.0}
+\newcommand{\objects}[2]{%
+  \leavevmode\vbox{\hbox{#1}\nointerlineskip\hbox{#2}}%
+}
+\title{Lab 1 \\ Introduction and Number Representation}
+\author{Qadis Chaudhry}
+\date{September 29, 2021}
+\begin{document}
+\maketitle
+    \section{Unsigned Integers}
+    \subsection*{Conversions}
+    \begin{itemize}
+        \item[a.] Convert the following from their initial radix to the other
+            two common radices:
+    \end{itemize}
+    0b011000101:
+    \par $2^{7} + 2^{6} + 2^{2} + 2^{0} = \boxed{(198)_{10}}$
+    \par $(1100)_{2}(0101)_{2} = (C)_{16}(5)_{16} = \boxed{(C5)_{16}}$ \\
+    0xF54E:
+    \par $15 \times 16^{3} + 5 \times 16^{2} + 4 \times 16 + 14 = \boxed{(62798)_{10}}$
+    \par $(F)_{16}(5)_{16}(4)_{16}(E)_{16} =
+    (1111)_{2}(0101)_{2}(0100)_{2}(1110)_{2} = \boxed{(1111010101001110)_{2}}$ \\
+    312:
+    \\
+    \begin{minipage}{0.5\linewidth}
+        \begin{align*}
+            312 \div 2 = 156\ R&0 \\
+            156 \div 2 = 78\ R&0 \\
+            78 \div 2 = 39\ R&1 \\
+            39 \div 2 = 19\ R&1 \\
+            19 \div 2 = 9\ R&1 \\
+            9 \div 2 = 4\ R&1 \\
+            4 \div 2 = 2\ R&0 \\
+            2 \div 2 = 1\ R&0 \\
+            1 \div 2 = 0\ R&1 \\
+            \boxed{(100111100)_{2}}
+        \end{align*}
+    \end{minipage}
+    \begin{minipage}{0.5\linewidth}
+        \begin{align*}
+            312 \div 16 = 19\ R&8 \\
+            19 \div 16 = 1\ R&3 \\
+            1 \div 16 = 0\ R&1 \\
+            \boxed{(138)_{16}}
+        \end{align*}
+    \end{minipage}
+    \newpage
+    \noindent 0b10110111:
+    \par $2^{7} + 2^{5} + 2^{4} + 2^{2} + 2^{1} + 2^{0} = \boxed{(183)_{10}}$
+    \par $(1011)_{2}(0111)_{2} = \boxed{(B7)_{16}}$ \\
+    0x6BCC:
+    \par $6 \times 16^{3} + 11 \times 16^{2} + 12 \times 16 + 12 = \boxed{(27596)_{10}}$
+    \par $(6)_{16}(B)_{16}(C)_{16}(C)_{16} =
+    (0110)_{2}(1011)_{2}(1100)_{2}(1100)_{2} = \boxed{(110101111001100)_{2}}$ \\
+    87:
+    \\
+    \begin{minipage}{0.5\linewidth}
+        \begin{align*}
+            87 \div 2 = 43\ R&1 \\
+            43 \div 2 = 21\ R&1 \\
+            21 \div 2 = 10\ R&1 \\
+            10 \div 2 = 5\ R&0 \\
+            5 \div 2 = 2\ R&1 \\
+            2 \div 2 = 1\ R&0 \\
+            1 \div 2 = 0\ R&1 \\
+            \boxed{(1010111)_{2}}
+        \end{align*}
+    \end{minipage}
+    \begin{minipage}{0.5\linewidth}
+        \begin{align*}
+            87 \div 16 = 5\ R&7 \\
+            5 \div 16 = 0\ R&5 \\
+            \boxed{(57)_{16}}
+        \end{align*}
+    \end{minipage}
+    \begin{itemize}
+        \item[b.] Write the following using IEC prefixes:
+    \end{itemize}
+    \par $2^{29}: \boxed{\text{512 Mi}},\ 2^{54}: \boxed{\text{16 Pi}},\
+    2^{16}: \boxed{\text{64
+    Ki}},\ 2^{65}: \boxed{\text{32 Ei}},\ 2^{33}: \boxed{\text{8 Gi}},\
+    2^{42}: \boxed{\text{4 Ti}}$
+    \begin{itemize}
+        \item[c.] Write the following using SI prefixes:
+    \end{itemize}
+    \par $10^{5}: \boxed{\text{100 K}}, 10^{16}: \boxed{\text{10 P}}, 10^{10}:
+    \boxed{\text{10 G}}, 10^{19}: \boxed{\text{10 E}}, 10^{27}:
+    \boxed{\text{1000 Y}}, 10^{4}: \boxed{\text{10 K}}$
+    \begin{itemize}
+        \item[d.] Write the following with powers of 10:
+    \end{itemize}
+    \par $\text{21 Z}: \boxed{21 \times 10^{21}}, \text{9 Y}: \boxed{9 \times 10^{24}},
+    \text{13 K}: \boxed{13 \times 10^{3}}$
+    \begin{itemize}
+        \item[e.] Write the following with powers of 2:
+    \end{itemize}
+    \par $\text{14 Mi}: \boxed{14 \times 2^{20}}, \text{12 Ei}: \boxed{12 \times
+    2^{60}}, \text{27 Ki}: \boxed{27 \times 10^{10}}$
+    \section{Signed Integers}
+    \subsection*{Two's Complement Exercises}
+    \begin{itemize}
+        \item[1.] What is the largest integer that can be represented with 16
+            bits? How many bits do you need to represent the largest integer
+            plus 1?
+    \end{itemize}
+    \par With Two's Complement, the range is from $-2^{16-1}$ to $2^{16-1}
+    - 1$, which is from -32,768 to 32,767. This makes the largest number able to
+    be represented by Two's Complement, 32,767. To represent the largest integer
+    plus 1, you would need one more bit as this adds to the overall range making
+    the new range from, -65536 to 65535.
+    \par With unsigned numbers, the largest number that can be represented is
+    $2^{16} - 1 = 65535$. To represent the largest number plus one, once again,
+    you would need 17 bits.
+    \begin{itemize}
+        \item[2.] How do you represent the numbers 100, 6, and -5 (assume the
+            numbers are 8 bits)?
+    \end{itemize}
+    100:
+    \par For positive integers, unsigned and Two's Complement are exactly the
+    same, so for 100, using the division technique,
+    \begin{align*}
+        100 \div 2 = 50\ R&0 \\
+        50 \div 2 = 25\ R&0 \\
+        25 \div 2 = 12\ R&1 \\
+        12 \div 2 = 6\ R&0 \\
+        6 \div 2 = 3\ R&0 \\
+        3 \div 2 = 1\ R&1 \\
+        1 \div 2 = 0\ R&1
+    \end{align*}
+    The number $(100)_{10}$ in 8 bit unsigned and Two's Complement notation
+    would be
+    $\boxed{01100100.}$ \\
+    6:
+    \par Using the same technique as before and the same principle,
+    \begin{align*}
+        6 \div 2 = 3\ R&0 \\
+        3 \div 2 = 1\ R&1 \\
+        1 \div 2 = 0\ R&1
+    \end{align*}
+    the 8 bit representation for the decimal number 6 in Two's Complement as
+    well as unsigned integers, would be $\boxed{00000110.}$ \\
+    -5:
+    \par Since this number is negative, it is signed and therefore cannot be
+    represented using the unsigned integers. In this case, the number must be
+    converted to binary and then using Two's Complement, made negative.
+    \begin{align*}
+        5 \div 2 = 2\ R&1 \\
+        2 \div 2 = 1\ R&0 \\
+        1 \div 2 = 0\ R&1
+    \end{align*}
+    Taking this number in 8 bits, $(00000101)_{2}$ and converting it to negative
+    using Two's Complement, first we flip all the bits yielding,
+    $(11111010)_{2}$ and then we add 1 to the least significant bit,
+    $\boxed{11111011.}$
+    \begin{itemize}
+        \item[3.] How do you represent 264 and -264 (assume the numbers are 8
+            bits)?
+    \end{itemize}
+    \par Finding the range for the maximum possible integer for 8 bit numbers,
+    for unsigned we find that it is from 0 to $2^{8} - 1 = 255$, and for Two's
+    Complement it ranges from $-2^{8-1}$ to $2^{8-1} - 1$ which is from -128 to
+    127. In both of these cases, it can be seen that the value of 264 resides
+    outside of the range for 8 bit numbers and therefore cannot be represented
+    using either notation.
+    \begin{itemize}
+        \item[4.] What is the range of decimal (presented with powers of 2) that
+            32-bit Two's Complement can represent? Please explain why.
+    \end{itemize}
+    \par The range of numbers would be from $-2^{32-1}$ to $2^{32-1}-1$, which
+    would result in a range from -2147483648 to 2147483647. Represented using
+    powers of 2 this would be, from -2 Gi to 2 Gi - 1.  This happens to be the
+    range since Two's Complement has the ability to represent both positive and
+    negative numbers and adding two opposite numbers together would have to
+    result in zero. For this reason, since there are only a limited number of
+    bits, in this case 32, the range will be half that of unsigned 32-bit
+    integers. The maximum unsigned 32-bit integer can be represented as $2^{32}$
+    which is 4294967296. This number is cut in half, and the negative integers
+    can be represented up to -2147483648, and the maximum positive integer will
+    be 2147483647 since we have to account for zero.
+    \begin{itemize}
+        \item[5.] Why do computers use bytes for address representation?
+    \end{itemize}
+    \par Using bits would likely be too costly to be beneficial. Bytes are used
+    for addressing as this allows for more addresses to be defined with a large
+    number of bits.
+    \begin{itemize}
+        \item[6.] How much data can we store on a 8 K-byte memory chip?
+    \end{itemize}
+    \par 8 bytes will be equal to 8000 bytes, and since there are 8 bits in one
+    byte, there are 64000 bits that can be stored on the chip. Since each of the
+    registers in the chip can hold 32 bits, this leaves 2000 addresses in which
+    information can be stored.
+    \section{Counting}
+    \begin{itemize}
+        \item[1.] How many bits do we need to represent a variable that can only
+            take on the values 10, 20, 30, or 40?
+    \end{itemize}
+    \par Since the variable can only have four possible values, $2^{2}$, 2 bits
+    would be required to cover the four states.
+    \begin{itemize}
+        \item[2.] If the only value a variable can take on is 98.65, how many
+            bits are needed to represent it?
+    \end{itemize}
+    \par Since there is only one value for this variable to take on the lowest
+    possible number of bits would be 1 bit since it can hold two values and we
+    cannot go lower than that.
+    \begin{itemize}
+        \item[3.] If we need to address 4 Mi-Byte of memory and we want to
+            address every byte of memory, how long does an address need to be?
+    \end{itemize}
+    \par 4 Mi-Bytes would be equal to $4 * 2^{20}$ Bytes, which equals $2^{22}$
+    Bytes. Using the equation $\log_2(n)$ which gives the number of bits needed
+    to address some $n$ number of bytes, we get that 22 bits are needed for each
+    address.
+\end{document}
