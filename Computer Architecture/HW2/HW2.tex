@@ -1,0 +1,189 @@
+\documentclass[12pt]{article}
+\usepackage{indentfirst}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{multicol}
+\setlength{\jot}{2ex}
+\usepackage{mathrsfs}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{booktabs}
+\usepackage[letterpaper, margin=1in]{geometry}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhead[R]{Homework 2}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{1pt}
+\renewcommand{\footrulewidth}{1pt}
+\usepackage [autostyle, english = american]{csquotes}
+\MakeOuterQuote{"}
+\renewcommand{\baselinestretch}{1.0}
+\newcommand{\objects}[2]{%
+  \leavevmode\vbox{\hbox{#1}\nointerlineskip\hbox{#2}}%
+}
+\begin{document}
+    \section*{Problem 1}
+        \noindent When introducing RISC-V instructions, we have seen several
+        required formats that do not seem to follow a straightforward or
+        convenient design.
+        \begin{itemize}
+            \item[(a)] All arithmetic operations must have 3 operands, which
+                makes the addition of $n$ numbers requiring $n-1$
+                instructions.
+            \item[(b)] The S-type RISC-V instruction format has the 12-bit
+                immediate field split into two fields, which makes the format
+                hard to read and understand.
+            \item[(c)] There is no bitwise NOT instruction provided, which makes
+                it inconvenient to write the code for NOT operations.
+        \end{itemize}
+        For each of the three cases above, explain why RISC-V follows this
+        design.
+        \begin{itemize}
+            \item[(a)] The reason for each instruction having three operands is
+                to coincide with the design principle that simplicity favors
+                regularity.  This means that the simplest solution is the one
+                that is most regular.  In the first case, the addition
+                instruction is limited to having three operands due to the fact
+                that this allows each of the instructions to be of the same
+                length. If we have an addition operation that deals with the sum
+                of 4 numbers, and one that only deals with 2, the computer would
+                have to write different instructions for each of the two sums
+                since they have a different of terms. With the required format
+                however, the computer will only have to deal with three operands
+                at one time, every time, for the practice of addition. Despite
+                having different numbers of instructions, it is still the most
+                efficient since the computer does not have to deal with multiple
+                formats each time it has to do addition, it can simply follow
+                one convention each time.
+            \item[(b)]For the S-type instructions the immediate field is split
+                into two separate sections for the same reason as before. Since
+                this type of instruction has 2 source registers, in order to
+                line the bits up with another type of instruction that uses 2
+                source registers, the R-type instructions, the immediate field
+                is split into separate sections. This leads the source register
+                fields, funct3 field, and the opcode field, to all be in the
+                same place. This once again satisfies the regularity principle
+                as the fields in the different types of instructions are lined
+                up in the same place allowing the computer to recognize them
+                more quickly.
+            \item[(c)]For the last case, if we look at a different design
+                principle, good design demands good compromises, we can see why
+                there is no need for a specific NOT instruction. With the use of
+                the XOR instruction, the NOT operation can be achieved and for
+                this reason there is no need to design another instruction
+                simply for a specific case when the case is already covered by
+                another instruction. For this reason, it is more efficient to
+                simply use an existing operation to get the desired behavior.
+        \end{itemize}
+        \newpage
+        \section*{Problem 2}
+        \noindent We have the following C code:
+        \begin{center}
+
+            \texttt{A[6] = A[6] + 3;}
+        \end{center}
+        Assuming the base address of array \texttt{A} in memory is stored in
+        register x22, and the memory is byte addressed, please convert the C
+        code to the following lower-level code:
+        \begin{itemize}
+            \item[(a)] RISC-V assembly code
+            \item[(b)] Machine code in binary
+        \end{itemize}
+        For each line of assembly code, write a comment explaining what the code
+        is doing and for each line of machine code explain which instruction
+        format is used.
+        \begin{itemize}
+            \item[(a)]
+        \end{itemize}
+        \begin{align*}
+            &\text{lw x9, 24(x22)} &&\text{// load from memory A[6] into register x9} \\
+            &\text{addi x9, x9, 3} &&\text{// perform addition A[6] + 3} \\
+            &\text{sw x9, 24(x22)} &&\text{// store into memory at A[6] the value of A[6] + 3}
+        \end{align*}
+        \begin{itemize}
+            \item[(b)]
+        \end{itemize}
+        \begin{align*}
+            &000000011000 10110 010 01001 0000011\qquad \text{I-type Instructions} \\
+            &000000000011 01001 000 01001 0010011\qquad \text{I-type Instructions} \\
+            &0000000 01001 10110 010 11000 0100011\qquad \text{S-type Instructions}
+        \end{align*}
+        \section*{Problem 3}
+        \noindent Assuming variable \texttt{i} is in register x5, the base
+        address of array \texttt{A} in memory is in register x22, and variable
+        \texttt{s} is in register x23:
+        \begin{itemize}
+            \item[(a)] Please convert the following C code to RISC-V assembly
+                code.
+        \end{itemize}
+        \begin{align*}
+            &\texttt{for (i = 99; i >= 0; i = i - 1)\{} \\
+            &\qquad \texttt{A[i] = A[i] + s;} \\
+            &\texttt{\}}
+        \end{align*}
+        \newpage
+        \begin{itemize}
+            \item[(b)] Now the C code is updated to the following, which would
+                produce the same results as in part a.
+        \end{itemize}
+        \begin{align*}
+            &\texttt{for (i = 99; i >= 0; i = i - 2)\{} \\
+            &\qquad \texttt{A[i] = A[i] + s;} \\
+            &\qquad \texttt{A[i-1] = A[i-1] + s;} \\
+            &\texttt{\}}
+        \end{align*}
+        Convert this loop to RISC-V and discuss the pros and cons compared to
+        the version in a.
+        \begin{itemize}
+            \item[(a)]
+        \end{itemize}
+        \begin{align*}
+                &\text{addi x5, x0, 99} &&\text{// initialize value of i} \\
+            \text{Loop:}\quad
+                &\text{ssli x10, x5, 2} &&\text{// shifts i by 4 bytes} \\
+                &\text{add x10, x10, x22} &&\text{// address of A[i]} \\
+                &\text{lw x9, 0(x10)} &&\text{// x9 = A[i]} \\
+                &\text{blt x5, x0, Exit} &&\text{// exit if i $<$ 0} \\
+                &\text{add x9, x9, x23} &&\text{// A[i] = A[i] + s} \\
+                &\text{sw x9, 0(x10)} &&\text{// store A[i] + s into A[i]} \\
+                &\text{addi x5, x5, -1} &&\text{// set i = i - 1} \\
+                &\text{beq x0, x0, Loop} &&\text{// loop condition} \\
+            \text{Exit:}\quad
+                &\text{\ldots}
+        \end{align*}
+        \newpage
+        \begin{itemize}
+            \item[(b)]
+        \end{itemize}
+        \begin{align*}
+                &\text{addi x5, x0, 99} &&\text{// initialize value of i} \\
+            \text{Loop:}\quad
+                &\text{ssli x10, x5, 2} &&\text{// shifts i by 4 bytes} \\
+                &\text{add x10, x10, x22} &&\text{// address of A[i]} \\
+                &\text{lw x9, 0(x10)} &&\text{// x9 = A[i]} \\
+                &\text{addi x4, x5, -1} &&\text{// x4 = i - 1} \\
+                &\text{ssli x11, x4, 2} &&\text{// shifts i-1 by 4 bytes} \\
+                &\text{add x11, x11, x22} &&\text{// address of A[i-1]} \\
+                &\text{lw x8, 0(x11)} &&\text{// x8 = A[i-1]} \\
+                &\text{blt x5, x0, Exit} &&\text{// exit if i $<$ 0} \\
+                &\text{add x9, x9, x23} &&\text{// A[i] = A[i] + s} \\
+                &\text{sw x9, 0(x10)} &&\text{// store A[i] + s into A[i]} \\
+                &\text{add x8, x8, x23} &&\text{// A[i-1] = A[i-1] + s} \\
+                &\text{sw x8, 0(x11)} &&\text{// store A[i-1] + s into A[i-1]} \\
+                &\text{addi x5, x5, -2} &&\text{// set i = i - 2} \\
+                &\text{beq x0, x0, Loop} &&\text{// loop condition} \\
+            \text{Exit:}\quad
+                &\text{\ldots}
+        \end{align*}
+        \par From the two sets of assembly code it can be seen that one is
+        significantly longer than the other. And this leads to the main
+        advantages and disadvantages of the two loops written in C code. The
+        code for part b requires far more designation of resources by the CPU as
+        it requires the use of more registers and more lines of code to assemble
+        is general. For this reason, the loop in part a is much more optimized
+        and will much more efficiently than the loop in part b. Although both of
+        the loops provide the same function, since the loop in part a is less
+        lines of assembly code, the program will be a smaller size than its
+        counterpart in part b and therefore, it will be more efficient, making
+        it the better option.
+\end{document}

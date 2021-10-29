@@ -1,0 +1,167 @@
+\documentclass[12pt]{article}
+\usepackage{indentfirst}
+\usepackage{amsmath}
+\usepackage{multicol}
+\setlength{\jot}{2ex}
+\usepackage{mathrsfs}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{booktabs}
+\usepackage[letterpaper, margin=1in]{geometry}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage[autostyle, english = american]{csquotes}
+\MakeOuterQuote{"}
+\renewcommand{\baselinestretch}{1.0}
+\newcommand{\objects}[2]{%
+  \leavevmode\vbox{\hbox{#1}\nointerlineskip\hbox{#2}}%
+}
+\title{Lab 2 \\ Introduction to C Programming Language}
+\author{Qadis Chaudhry}
+\date{October 13, 2021}
+\begin{document}
+\maketitle
+    \section*{Exercise 1}
+    \begin{verbatim}
+                            Exercise 1:
+                            ====================
+                            Rutgers!
+                            Have a great semester!
+
+                            Hello Scarlet Knights!
+    \end{verbatim}
+    \begin{itemize}
+        \item[1.]
+            This is the output of the code above and it is based specifically on
+            the values of the variables, $v0$, $v1$, $v2$, and $v3$. The first
+            line is outputted unconditionally, where \verb+\n+ signals the start
+            of a new line. The variable $v 0$ is used in a switch case and since
+            it has a value of 5, the output will be \verb+"Rutgers!"+ followed
+            by a new line. The line after that is the default case for the
+            switch meaning it will always be outputted. After that is a blank
+            line which in the code is a result of the \verb+printf("\n");+ which
+            prints a blank line. The \verb+"Hello"+ in the last line is a result
+            of the if-else statement, where the condition is false due to $v 2$
+            not equalling 6, meaning the else part will execute which is \verb+s = "Hello"+.
+            After this is another conditional if-else statement where the
+            condition will always be false since, logically, there is no way $v
+            3$ does not equal itself, and therefore the else section will
+            execute. This part of the code simply prints \verb+"Scarlet Knights!\n"+
+            and with that is the end of the program.
+        \item[2.]
+            For the \verb+for+ loop, there is an inherent flaw with how the
+            iteration is defined, and that is the fact that if $v 1$ is greater
+            than $a$, the loop will run forever. Since the loop subtracts 1 from
+            $a$ for each iteration, and the condition is true if $v 1$ is
+            greater than $a$, $v 1$ will always be greater than $a$. The
+            condition for the loop will always be true and it will run forever.
+            Any value of $v 1$ that is greater than 5 will cause this issue
+            since $a=5$.
+    \end{itemize}
+    \section*{Exercise 2}
+    \begin{center}
+                        count = 6, Have a wonderful day.
+    \end{center}
+    \begin{itemize}
+        \item[1.]
+            The output of the program is shown above. In this code three
+            variables are defined, \verb+i, p+ and \verb+count.+ Here, the
+            variable \verb+p+ is set to be pointer to \verb+count+ and this
+            means that changing the value of \verb+*p+ will change the value of
+            \verb+count+. When we reach the \verb+for+ loop, this concept is
+            important since both \verb+*p+ and \verb+count+ are being changed.
+            This means at every iteration the value of \verb+count+ changes
+            twice leaving the final value being 6 over the three iterations.
+        \item[2.]
+            The command to set a breakpoint at a line is simply \verb+break+ and
+            then the name of the file and the line number. To specify a
+            breakpoint at line 7 in the file \verb+main.c+, the command would be
+            \verb+break main.c:7+.
+        \item[3.]
+            The \verb+break... if+ \textit{expr} command might be useful for
+            when dealing with loops and we need to break conditionally at a
+            value of a specific variable. There can be cases where a loop runs
+            and there is a bug within the loop causing some variable to manifest
+            a value that it is not supposed to. If for example we know the
+            desired value, we can have the condition be \verb+if not(desired value)+
+            and therefore the code will stop at the point where the variable
+            takes on the erroneous value.
+    \end{itemize}
+    \section*{Exercise 3}
+    \begin{center}
+        Checking first list for cycles. There should be none, ll\_has\_cycle
+        says it has no cycle
+    \end{center}
+    \begin{itemize}
+        \item[1.]
+            The output of the program initially is a bunch of errors referring
+            to the \verb+printf+ statements. After the bugs are fixed, this is
+            the intended output of the program, shown above.
+        \item[2.]
+            The bug/fault of this program was the format of the \verb+printf+
+            statements. Since they spanned two lines, there was no quotation
+            mark to end the argument of the printed statement. To fix the
+            program, we simply needed to add a set of two quotations, one at the
+            end of the first line where it splits and another where the second
+            line begins. Another fix is to make the print argument only span one
+            line and the code will run properly.
+    \end{itemize}
+    \section*{Exercise 4}
+    \par For this program we have two variables, \verb+a+ and
+    \verb+arr_pointer+, where \verb+a+ is an array holding 5 values and
+    \verb+arr_pointer+ is set to point to the third index, or the forth value,
+    within the array. For the time right after these two are assigned, the
+    value of
+    \verb+a+ is \verb+{42, 31, 65, 78, 9}+ and since \verb+arr_pointer+ point to
+    the third index of the array, it holds the value \verb+78+  initially. Right after
+    these first two lines of the \verb+main+ function, \verb+*arr_pointer+ is
+    set equal to \verb+20+, and since this is a pointer to \verb+a[3]+, the
+    value of \verb+a[3]+ is set to \verb+20+. This makes the new value of
+    \verb+a+, \verb+{42, 31, 65, 20, 9}+. The line after this sets the value of
+    the point to itself plus 1 meaning the new value of \verb+*arr_pointer = a[4]+.
+    Lastly, the program outputs the decimal value of \verb+*arr_pointer+, the
+    value stored in \verb+a[4]+, which is \verb+9+.
+    \section*{Exercise 5}
+    \noindent C code:
+    \begin{verbatim}
+                    #include <stdio.h>
+
+                    void swap(int *x, int *y) {
+                        int temp;
+                        temp = *x;
+                        *x = *y;
+                        *y = temp;
+                        return;
+                    }
+
+                    int main() {
+                        int arr[6] = {12, 100, 10, 1000, 11, 12};
+                        int size = sizeof arr / 4;
+                        int *p1 = &arr[0];
+                        int *p2 = &arr[size-1];
+                        printf("Orignial Array: \n");
+                        for (int i=0; i < size; i++) {
+                            printf("%d ", arr[i]);
+                        }
+                        printf("\n");
+                        for (int i=0; i < size / 2; i++) {
+                            swap(p1, p2);
+                            p1++;
+                            p2--;
+                        }
+                        printf("Reversed Array: \n");
+                        for (int i=0; i < size; i++) {
+                            printf("%d ", arr[i]);
+                        }
+                        printf("\n");
+                        return 0;
+                    }
+    \end{verbatim}
+    Output:
+    \begin{verbatim}
+                            Orignial Array:
+                            12 100 10 1000 11 12
+                            Reversed Array:
+                            12 11 1000 10 100 12
+    \end{verbatim}
+\end{document}

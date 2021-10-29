@@ -1,0 +1,154 @@
+\documentclass[12pt]{article}
+\usepackage{indentfirst}
+\usepackage{amsmath}
+\usepackage{multicol}
+\setlength{\jot}{2ex}
+\usepackage{mathrsfs}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{booktabs}
+\usepackage[letterpaper, margin=1in]{geometry}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage[autostyle, english = american]{csquotes}
+\MakeOuterQuote{"}
+\renewcommand{\baselinestretch}{1.0}
+\newcommand{\objects}[2]{%
+  \leavevmode\vbox{\hbox{#1}\nointerlineskip\hbox{#2}}%
+}
+\title{Lab 3 \\ C Memory Management and Introduction to RISC-V}
+\author{Qadis Chaudhry}
+\date{October 27, 2021}
+\begin{document}
+\maketitle
+    \section*{Exercise 1}
+    \begin{enumerate}
+        \item
+            Contiguous memory refers to a set of memory that is already allocated for user processes while dynamically allocated memory is memory that is defined by the user for a specific task. The main difference between the two is the fact that dynamically allocated memory is able to change size while contiguous is fixed, often referred to as static memory. Accessing them will take different amounts of time based on the task which is being computed. In a general sense, the contiguous memory will be able to be accessed faster since it is fixed whereas when accessing dynamically allocated memory, the computer has to make sure not only that the correct data is being extracted, but also at the right time since the memory space can change size at any time. This affects the speed at which data can be accessed and therefore, the overall speed of the program.
+        \item
+            \begin{verbatim}
+                #include <stdio.h>
+                #include <stdlib.h>
+
+                int main()
+                {
+                    int* array;
+                    array = (int*) malloc(20 * sizeof(int));
+                    free(array);
+                    return 0;
+                }
+            \end{verbatim}
+           If we attempt to print the array before it is freed, it will be printed with no issue. This is because the array is dynamically allocated in the memory and it can be manipulated as the programmer wishes. We can print the array as well within this time since it exists in memory. After freeing it however, the value printed will be undefined since there is technically nothing in the array for the program to print. This will result in a NULL expression or an error since there is nothing to print from the viewpoint of the program.
+    \end{enumerate}
+    \section*{Exercise 2}
+    \begin{enumerate}
+        \item
+            Using the simulator we can step through each line of code and see how the registers change with every instruction. The first two lines,
+            \begin{center}
+                \verb+addi x5, x0, 3+ \\
+                \verb+addi x6, x0, 11+
+            \end{center}
+            are simply assigning values to the registers \verb+x5+ and \verb+x6+, where \verb+x5+ equals 3 and \verb+x6+ equals 11. The next line performs the AND operation on the values of registers \verb+x5+ and \verb+x6+, and stores the result in \verb+x7+.
+            \begin{center}
+                \verb+and x7, x6, x5+
+            \end{center}
+            In binary, the value in \verb+x5+ would be 0011, and the value in \verb+x6+ is 1011. Performing bitwise AND on these two numbers will yield the result 0011 in binary, or 3 in decimal. This value is stored in \verb+x7+. The last line,
+            \begin{center}
+                \verb+slli x7, x7, x5+
+            \end{center}
+            takes the value stored in \verb+x7+ and shifts it left by the number of bits in register \verb+x5+. Since the value in \verb+x5+ is 3, the number in \verb+x7+ will be shifted left by 3 digits which is the same as multiplying the number by $ 2^{3} $ or 8. This will yield a value of 24, since 3 * 8 is 24, stored in register \verb+x7+.
+         \item
+             The largest value we can have for the constants is 32. This is because of the fact that when we are shifting bits, the largest value we can shift by is 32 since that would be equal to multiplying by $ 2^{32} $. Since we are using 32 bit registers, any value higher than that will yield incorrect results as the numbers cannot be represented with the number of bits provided by the register.
+         \item
+             \begin{verbatim}
+
+                 #include <stdio.h>
+
+                 int main()
+                 {
+                     int arr[9];
+                     arr[4] = arr[4] << arr[8];
+                     return 0;
+                 }
+             \end{verbatim}
+             This is the program in C representing the assembly instructions given in the problem. According to the instructions, the pointer variable has the highest value of 9, meaning that the array must have be of at least 9 elements. This warrants the line \verb+int arr[9]+ as this initializes an array with 9 elements. From the actual instructions now we can see that the first two lines are simply loading the values. Due to the byte addressing nature of arrays, by dividing the offset by 4 we can see which index these values are coming from if the base address of the array is \verb+x27+. Register \verb+x5+ stores the value of \verb+arr[4]+ and register \verb+x6+ stores the value of \verb+arr[8]+. The second to last line signifies the shifting of \verb+x5+ by the value stored in \verb+x6+. The shifting operation can be done in C with the "\verb+<<+" operator. The last line signifies that this result is stored back into index 4 of the array. Putting it all together, we get an expression of \verb+arr[4] = arr[4] << arr[8]+.
+         \item
+             \begin{align*}
+                 &\text{lui x5, 0x87654}\quad &&\text{// stores in left 20 bits of the address} \\
+                 &\text{addi x5, x5, 0x321}\quad &&\text{// adds the rest of the bits to the address} \\
+                 &\text{ld x22, 0(x5)}\quad &&\text{// loads the contents of x5 into memory with offset  0} \\
+                 & &&\text{assuming address is in x22}
+             \end{align*}
+    \end{enumerate}
+    \section*{Exercise 3}
+    \begin{enumerate}
+        \item
+            The output of this function was "900." The first two lines act as loading instructions as they load values into the registers \verb+x10+ and \verb+x11+. The last line is \verb+ecall+ and this gives calls to the OS. Since the register \verb+x11+ is responsible for return values, the program will output the value in the register when called. This may be useful in applications since we may need to call the kernel to execute some possess in the evolution of the program, the \verb+ecall+ instruction can achieve this purpose.
+        \item
+            \begin{align*}
+                &\text{addi x5, x0, 24}\quad &&\text{// put value of x in x5} \\
+                &\text{addi x6, x0, 56}\quad &&\text{// put value of y in x6} \\
+                &\text{addi x10, x0, 4}\quad &&\text{// sets call to print string} \\
+                &\text{ecall}\quad &&\text{// assuming "x * y = " is in x11} \\
+                &\text{mul x7, x5, x6}\quad &&\text{// multiply x and y} \\
+                &\text{addi x10, x0, 1}\quad &&\text{// set call to print integer} \\
+                &\text{add x11, x0, x7}\quad &&\text{// put value of x7 in x11} \\
+                &\text{ecall}\quad &&\text{// prints value x * y from x11}
+            \end{align*}
+        \item
+            \begin{align*}
+                &\text{addi x26, x0, 32}\quad &&\text{// a = 32} \\
+                &\text{addi x27, x0, 36}\quad &&\text{// b = 36} \\
+                &\text{addi x28, x0, 10}\quad &&\text{// c = 10} \\
+                &\text{bge x26, x27, Else}\quad &&\text{// if a $ \ge $ b, move to else} \\
+                &\text{slli x29, x28, 1}\quad &&\text{// c * 2 and store result in x29} \\
+                &\text{addi x10, x0, 1}\quad &&\text{// set call to print integer} \\
+                &\text{add x11, x0, x29}\quad &&\text{// put value of c * 2 in x11 to be printed} \\
+                &\text{ecall}\quad &&\text{// print value in x11} \\
+                &\text{beq x0, x0, End}\quad &&\text{// end program} \\
+            \end{align*}
+            Else:
+            \begin{align*}
+                &\text{mul x26, x27, x27}\quad &&\text{// b * b and store the value in a} \\
+                &\text{div x27, x26, 2}\quad &&\text{// a/2 and store value in b} \\
+                &\text{addi x10, x0, 1}\quad &&\text{// sets call to print integer} \\
+                &\text{add x11, x0, x28}\quad &&\text{// puts value to be printed, c, in x11} \\
+                &\text{ecall}\quad &&\text{// print value in x11}
+            \end{align*}
+            End: \ldots
+    \end{enumerate}
+    \section*{Exercise 4}
+    \begin{enumerate}
+        \item
+            This will jump back to the \verb+main+ label since the instruction \verb+j+ represents jump and \verb+main+ refers to the label to which it jumps. This will lead to an infinite loop since the \verb+main+ label represents the top of the file and adding this to the bottom will jump to that label. This will continue on forever since the loop is being reinstated at the end of each iteration.
+        \item
+            exercise4:
+            \begin{align*}
+                &\text{add x6, x0, x0}\quad &&\text{// res = 0 stored in x6} \\
+                &\text{addi x5, x0, 99}\quad &&\text{// i = 99 stored in x5} \\
+                &\text{add x29, x6, x10}\quad &&\text{// x29 = res + a} \\
+                &\text{j Loop}\quad &&\text{// jump to Loop}
+            \end{align*}
+            Loop:
+            \begin{align*}
+                &\text{bge x29, x5, Exit}\quad &&\text{// if a + res is greater than i, exit} \\
+                &\text{add x6, x6, x10}\quad &&\text{// res = res + a} \\
+                &\text{add x5, x5, -1}\quad &&\text{// i = i - 1} \\
+                &\text{j Loop}\quad &&\text{// Loop again}
+            \end{align*}
+            Exit:
+            \begin{align*}
+                &\text{addi x1, x0, x6}\quad &&\text{// put x6 in return address} \\
+                &\text{jalr x0, 0(x1)}\quad &&\text{// return to caller}
+            \end{align*}
+            main:
+            \begin{align*}
+                &\text{addi x10, x0, 10}\quad &&\text{// a = 10 stored in x10} \\
+                &\text{jal x1, exercise4}\quad &&\text{// jump and link to procedure} \\
+                &\text{addi x28, x0, x1}\quad &&\text{// put return address value in x28, b} \\
+                &\text{addi x10, x0, 1}\quad &&\text{// sets call to print integer} \\
+                &\text{add x11, x0, x28}\quad &&\text{// puts value to be printed, b, in x11} \\
+                &\text{ecall}\quad &&\text{// print value in x11}
+            \end{align*}
+    \end{enumerate}
+\end{document}
